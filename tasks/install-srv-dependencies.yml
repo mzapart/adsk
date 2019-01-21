@@ -1,0 +1,13 @@
+---
+     - name: "download node"
+       get_url:
+          url: https://rpm.nodesource.com/setup_10.x
+          dest: /tmp/setup_10.x
+     - name: "exec node"
+       shell: bash /tmp/setup_10.x
+     - name: "install node"
+       yum:
+          name: nodejs
+
+
+

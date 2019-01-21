@@ -1,0 +1,27 @@
+---
+     - name: "install the latest version of Apache srv"
+       yum:
+         name: httpd
+         state: latest
+       become: yes
+     - name: "install marysiaDb"
+       yum:
+         name: "{{packages}}"
+         state: present
+       vars:
+         packages:
+            - mariadb
+            - mariadb-server
+     - name: "PHP"
+       yum:
+         name: "{{packages}}"
+         state: latest
+       vars:
+         packages:
+            - php
+            - php-mysql
+            - MySQL-python
+     - name: "start mariadb"
+       service: 
+         name: mariadb
+         state: started 

@@ -1,0 +1,8 @@
+---
+  - name: install certbot
+    yum:
+      name: python2-certbot-nginx
+      state: latest
+  - name: get certificate
+    shell: certbot -i nginx -d "www.rajca.tk" --nginx -m "andrzej@gmail.com" --agree-tos --redirect
+

@@ -1,0 +1,21 @@
+  - name: install the influxdb
+    yum:
+      name: "{{ influxdb_url }}"
+      state: present
+  - name: making sure that infuxdb is working
+    service:
+      name: influxdb
+      state: restarted      
+  - name: install grafana
+    yum:
+      name: "{{ grafana_url }}"
+      state: present
+  - name: "put grafana config"
+    copy:
+      src: templates/grafana.ini
+      dest: "/etc/grafana/grafana.ini"    
+  - name: making sure that telegraf is working
+    service:
+      name: grafana-server
+      state: restarted 
+    

@@ -1,0 +1,12 @@
+[Unit]
+Description=My carrental service
+After=network-online.target
+
+[Service]
+Type=simple
+User={{app_user}}
+ExecStart=/usr/bin/node /opt/carrental/server/server.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

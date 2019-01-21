@@ -1,0 +1,21 @@
+- name: Create influxdb datasource
+  grafana_datasource:
+    name: "datasource-influxdb"
+    grafana_url: "http://localhost:3000"
+    grafana_user: "admin"
+    grafana_password: "admin"
+    org_id: "1"
+    ds_type: "influxdb"
+    url: "http://localhost:8086"
+    database: "metrics"
+- copy:
+    src: dashboard/grafana-dashboard.json
+    dest: /tmp/grafana-dashboard.json
+- name: Create apache dashboard
+  grafana_dashboard:
+    grafana_url: "http://localhost:3000"
+    state: present
+    slug: "awesome dashboard"
+    message: Updated by ansible
+    overwrite: yes
+    path: /tmp/grafana-dashboard.json

@@ -1,0 +1,17 @@
+---
+- name: "install extra packages repo"
+  yum:
+    name: "{{ proxy_epel_repo_rmp }}"
+    state: present
+- name: "install nginx"
+  yum:
+    name: "nginx"
+    state: present
+- name: "place app cfg int place"
+  template:
+    src: templates/proxy.conf
+    dest: /etc/nginx/conf.d/application.conf
+- name: "start nginx service"
+  service:
+    name: "nginx"
+    state: restarted

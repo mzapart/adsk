@@ -1,0 +1,38 @@
+---
+    - name: "install server to remote machine"
+      file:
+        path: /opt/carrental
+        state: directory
+    - name: copy files to server
+      copy:
+        src: "{{srv_location}}"
+        dest: "{{app_location}}"
+    - name: "create user for service"
+      user:
+        name: "{{app_user}}"
+
+    - name: Update packages based on package.json to their latest version.
+      npm:
+        path: /opt/carrental/server
+        state: latest
+
+    - name: "copy systemd config"
+      template: 
+        src: templates/carrental.service
+        dest: /etc/systemd/system/carrental.service
+    - name: "start service"
+      systemd:
+        name: "carrental"
+        daemon_reload: yes
+        state: restarted
+    - name: copy client to server
+      copy:
+        src: "{{client_location}}"
+        dest: "{{app_location}}"   
+    
+    - name: Update packages based on package.json to their latest version.
+      npm:
+        path: /opt/carrental/front
+        state: latest
+
+   
